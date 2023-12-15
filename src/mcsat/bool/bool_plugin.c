@@ -107,7 +107,7 @@ typedef struct {
   } stats;
 
   /** Exception handler */
-  jmp_buf* exception;
+  /* jmp_buf */ void* exception;
 
 } bool_plugin_t;
 
@@ -1031,7 +1031,7 @@ void bool_plugin_event_notify(plugin_t* plugin, plugin_notify_kind_t kind) {
 }
 
 static
-void bool_plugin_set_exception_handler(plugin_t* plugin, jmp_buf* handler) {
+void bool_plugin_set_exception_handler(plugin_t* plugin, /* jmp_buf */ void* handler) {
   bool_plugin_t* bp = (bool_plugin_t*) plugin;
   bp->exception = handler;
 }

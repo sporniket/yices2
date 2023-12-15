@@ -140,6 +140,6 @@ void mcsat_gc_mark(mcsat_solver_t* mcsat);
 /*
  * Set the exception handler. Should be done before, any call into the solver.
  */
-void mcsat_set_exception_handler(mcsat_solver_t* mcsat, jmp_buf* handler);
+void mcsat_set_exception_handler(mcsat_solver_t* mcsat, /* jmp_buf */ void* handler);
 
 #endif /* MCSAT_SOLVER_H_ */

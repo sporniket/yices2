@@ -720,7 +720,7 @@ struct context_s {
   bvconstant_t bv_buffer;
 
   // for exception handling
-  jmp_buf env;
+  /* jmp_buf */ void* env;
 
   // for verbose output (default NULL)
   tracer_t *trace;

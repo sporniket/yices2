@@ -296,7 +296,7 @@ struct tstack_s {
   attr_vtbl_t *avtbl;
 
   // exceptions/errors
-  jmp_buf env;
+  /* jmp_buf */ void* env;
   loc_t error_loc;
   int32_t error_op;
   char *error_string;

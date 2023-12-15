@@ -40,7 +40,7 @@ extern void init_bv_solver(bv_solver_t *solver, smt_core_t *core, egraph_t *egra
 /*
  * Attach a jump buffer for exception handling
  */
-extern void bv_solver_init_jmpbuf(bv_solver_t *solver, jmp_buf *buffer);
+extern void bv_solver_init_jmpbuf(bv_solver_t *solver, /* jmp_buf */ void *buffer);
 
 
 /*

@@ -24,7 +24,7 @@
 //include <setjmp.h>
 #include <inttypes.h>
 
-static void jumper(jmp_buf *env) {
+static void jumper(/* jmp_buf */ void *env) {
   uint32_t i, j;
 
   for (i=0; i<10000; i++) {
@@ -42,7 +42,7 @@ static void jumper(jmp_buf *env) {
 
 
 static void catcher(void) {
-  jmp_buf env;
+  /* jmp_buf */ void* env;
   int code;
 
   printf("calling setjmp\n\n");
@@ -59,12 +59,12 @@ static void catcher(void) {
 }
 
 typedef struct {
-  jmp_buf *ptr;
+  /* jmp_buf */ void *ptr;
 } buffer_t;
 
 static buffer_t aux;
 
-static void set_buffer(jmp_buf *b) {
+static void set_buffer(/* jmp_buf */ void *b) {
   aux.ptr = b;
 }
 
@@ -85,7 +85,7 @@ static void jumper2(void) {
 }
 
 static void catcher2(void) {
-  jmp_buf env;
+  /* jmp_buf */ void* env;
   int code;
 
   printf("initializing buffer\n");

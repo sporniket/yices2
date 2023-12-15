@@ -123,7 +123,7 @@ struct mcsat_solver_s {
   bool stop_search;
 
   /** Exception handler */
-  jmp_buf* exception;
+  /* jmp_buf */ void* exception;
 
   /** Term manager for everyone to use */
   term_manager_t tm;
@@ -797,7 +797,7 @@ void mcsat_construct(mcsat_solver_t* mcsat, const context_t* ctx) {
 
   mcsat->stop_search = false;
   mcsat->ctx = ctx;
-  mcsat->exception = (jmp_buf*) &ctx->env;
+  mcsat->exception = (/* jmp_buf */ void*) &ctx->env;
   mcsat->types = ctx->types;
   mcsat->terms = ctx->terms;
   mcsat->terms_size_on_solver_entry = 0;
@@ -2867,7 +2867,7 @@ void mcsat_build_model(mcsat_solver_t* mcsat, model_t* model) {
   preprocessor_build_model(&mcsat->preprocessor, model);
 }
 
-void mcsat_set_exception_handler(mcsat_solver_t* mcsat, jmp_buf* handler) {
+void mcsat_set_exception_handler(mcsat_solver_t* mcsat, /* jmp_buf */ void* handler) {
   uint32_t i;
   mcsat->exception = handler;
   preprocessor_set_exception_handler(&mcsat->preprocessor, handler);

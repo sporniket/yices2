@@ -110,7 +110,7 @@ typedef struct full_subst_s {
   int_hmap_t cache;
   int_stack_t stack;
   ivector_t aux;
-  jmp_buf env;
+  /* jmp_buf */ void* env;
 } full_subst_t;
 
 

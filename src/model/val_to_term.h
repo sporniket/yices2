@@ -61,7 +61,7 @@ typedef struct val_converter_s {
   term_table_t *terms;
   int_hmap_t cache;
   int_stack_t stack;
-  jmp_buf env;
+  /* jmp_buf */ void* env;
 } val_converter_t;
 
 

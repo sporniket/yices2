@@ -183,7 +183,7 @@ typedef struct lit_collector_s {
   int_stack_t stack;
   uint32_t options;
   bool bool_are_terms;
-  jmp_buf env;
+  /* jmp_buf */ void* env;
 } lit_collector_t;
 
 

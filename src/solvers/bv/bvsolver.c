@@ -7279,7 +7279,7 @@ void init_bv_solver(bv_solver_t *solver, smt_core_t *core, egraph_t *egraph) {
 /*
  * Attach a jump buffer for exception handling
  */
-void bv_solver_init_jmpbuf(bv_solver_t *solver, jmp_buf *buffer) {
+void bv_solver_init_jmpbuf(bv_solver_t *solver, /* jmp_buf */ void *buffer) {
   solver->env = buffer;
 }
 

@@ -131,7 +131,7 @@ typedef struct ctx_subst_s {
   uint32_t size;
   term_manager_t mngr;
   int_stack_t stack;
-  jmp_buf env;
+  /* jmp_buf */ void* env;
 } ctx_subst_t;
 
 #define DEF_CTX_SUBST_SIZE 100

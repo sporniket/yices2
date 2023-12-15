@@ -44,7 +44,7 @@ extern void init_simplex_solver(simplex_solver_t *solver, smt_core_t *core,
 /*
  * Attach a jump buffer for exceptions
  */
-extern void simplex_solver_init_jmpbuf(simplex_solver_t *solver, jmp_buf *buffer);
+extern void simplex_solver_init_jmpbuf(simplex_solver_t *solver, /* jmp_buf */ void *buffer);
 
 
 /*

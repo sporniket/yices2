@@ -2853,7 +2853,7 @@ void delete_idl_solver(idl_solver_t *solver) {
 /*
  * Attach a jump buffer
  */
-void idl_solver_init_jmpbuf(idl_solver_t *solver, jmp_buf *buffer) {
+void idl_solver_init_jmpbuf(idl_solver_t *solver, /* jmp_buf */ void *buffer) {
   solver->env = buffer;
 }
 

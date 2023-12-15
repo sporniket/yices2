@@ -414,7 +414,7 @@ typedef struct idl_solver_s {
   /*
    * Jump buffer for exception handling during internalization
    */
-  jmp_buf *env;
+  /* jmp_buf */ void *env;
 } idl_solver_t;
 
 
@@ -444,7 +444,7 @@ extern void init_idl_solver(idl_solver_t *solver, smt_core_t *core, gate_manager
 /*
  * Attach a jump buffer for internalization exception
  */
-extern void idl_solver_init_jmpbuf(idl_solver_t *solver, jmp_buf *buffer);
+extern void idl_solver_init_jmpbuf(idl_solver_t *solver, /* jmp_buf */ void *buffer);
 
 
 /*

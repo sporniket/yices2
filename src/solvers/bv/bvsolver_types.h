@@ -386,7 +386,7 @@ typedef struct bv_solver_s {
   /*
    * Jump buffer for exception handling during internalization
    */
-  jmp_buf *env;
+  /* jmp_buf */ void *env;
 
 } bv_solver_t;
 

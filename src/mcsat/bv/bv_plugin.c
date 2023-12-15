@@ -78,7 +78,7 @@ typedef struct {
   bv_conflict_type_t conflict_type;
 
   /** Exception handler */
-  jmp_buf* exception;
+  /* jmp_buf */ void* exception;
 
   /** Map from constraint variables to the constraint_unit_info_t enum */
   int_hmap_t constraint_unit_info;
@@ -1275,7 +1275,7 @@ bool bv_plugin_explain_evaluation(plugin_t* plugin, term_t t, int_mset_t* vars, 
 // Required as plugin_t field
 
 static
-void bv_plugin_set_exception_handler(plugin_t* plugin, jmp_buf* handler) {
+void bv_plugin_set_exception_handler(plugin_t* plugin, /* jmp_buf */ void* handler) {
   bv_plugin_t* bv = (bv_plugin_t*) plugin;
 
   if (ctx_trace_enabled(bv->ctx, "mcsat::bv")) {

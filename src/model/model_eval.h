@@ -65,7 +65,7 @@ typedef struct evaluator_s {
   value_table_t *vtbl;
   int_hmap_t cache;
   int_stack_t stack;
-  jmp_buf env;
+  /* jmp_buf */ void* env;
 } evaluator_t;
 
 

@@ -858,7 +858,7 @@ typedef struct simplex_solver_s {
   /*
    * Jump buffer for exception handling during internalization
    */
-  jmp_buf *env;
+  /* jmp_buf */ void *env;
 } simplex_solver_t;
 
 

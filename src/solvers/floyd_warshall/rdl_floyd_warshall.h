@@ -456,7 +456,7 @@ typedef struct rdl_solver_s {
   /*
    * Jump buffer for exception handling during internalization
    */
-  jmp_buf *env;
+  /* jmp_buf */ void *env;
 } rdl_solver_t;
 
 
@@ -486,7 +486,7 @@ extern void init_rdl_solver(rdl_solver_t *solver, smt_core_t *core, gate_manager
 /*
  * Attach a jump buffer for exceptions
  */
-extern void rdl_solver_init_jmpbuf(rdl_solver_t *solver, jmp_buf *buffer);
+extern void rdl_solver_init_jmpbuf(rdl_solver_t *solver, /* jmp_buf */ void *buffer);
 
 
 /*

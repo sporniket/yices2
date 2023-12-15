@@ -2085,7 +2085,7 @@ void nra_plugin_new_lemma_notify(plugin_t* plugin, ivector_t* lemma, trail_token
 }
 
 static
-void nra_plugin_set_exception_handler(plugin_t* plugin, jmp_buf* handler) {
+void nra_plugin_set_exception_handler(plugin_t* plugin, /* jmp_buf */ void* handler) {
   nra_plugin_t* nra = (nra_plugin_t*) plugin;
   nra->exception = handler;
 }

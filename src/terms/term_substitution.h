@@ -64,7 +64,7 @@ typedef struct term_subst_s {
   subst_cache_t cache;
   int_stack_t stack;
   renaming_ctx_t *rctx;
-  jmp_buf env;
+  /* jmp_buf */ void* env;
 } term_subst_t;
 
 

@@ -66,7 +66,7 @@ struct plugin_context_s {
   type_table_t* types;
 
   /** Exception handler */
-  jmp_buf* exception;
+  /* jmp_buf */ void* exception;
 
   /** Options */
   const mcsat_options_t* options;
@@ -312,7 +312,7 @@ struct plugin_s {
   /**
    * Notifies the plugin about a new exception handler.
    */
-  void (*set_exception_handler)(plugin_t* plugin, jmp_buf* handler);
+  void (*set_exception_handler)(plugin_t* plugin, /* jmp_buf */ void* handler);
 
 };
 

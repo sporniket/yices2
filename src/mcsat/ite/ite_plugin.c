@@ -29,7 +29,7 @@ typedef struct {
   plugin_context_t* ctx;
 
   /** Exception handler */
-  jmp_buf* exception;
+  /* jmp_buf */ void* exception;
 
 } ite_plugin_t;
 
@@ -79,7 +79,7 @@ void ite_plugin_new_term_notify(plugin_t* plugin, term_t term, trail_token_t* pr
 }
 
 static
-void ite_plugin_set_exception_handler(plugin_t* plugin, jmp_buf* handler) {
+void ite_plugin_set_exception_handler(plugin_t* plugin, /* jmp_buf */ void* handler) {
   ite_plugin_t* ite = (ite_plugin_t*) plugin;
   ite->exception = handler;
 }

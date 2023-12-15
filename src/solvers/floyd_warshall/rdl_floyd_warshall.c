@@ -3434,7 +3434,7 @@ void delete_rdl_solver(rdl_solver_t *solver) {
 /*
  * Attach a jump buffer
  */
-void rdl_solver_init_jmpbuf(rdl_solver_t *solver, jmp_buf *buffer) {
+void rdl_solver_init_jmpbuf(rdl_solver_t *solver, /* jmp_buf */ void *buffer) {
   solver->env = buffer;
 }
 

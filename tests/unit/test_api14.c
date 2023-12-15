@@ -103,7 +103,7 @@ static term_t make_a_term(uint32_t i) {
 /*
  * Out-of-memory handling using setjmp/longjmp
  */
-static jmp_buf *env;
+static /* jmp_buf */ void *env;
 
 static void oom_handler(void) {
   if (env == NULL) {
@@ -114,7 +114,7 @@ static void oom_handler(void) {
 }
 
 int main(void) {
-  jmp_buf buffer;
+  /* jmp_buf */ void buffer;
   volatile uint32_t n;
   term_t t;
 

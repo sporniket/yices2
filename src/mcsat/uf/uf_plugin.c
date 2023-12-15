@@ -81,7 +81,7 @@ typedef struct {
   } stats;
 
   /** Exception handler */
-  jmp_buf* exception;
+  /* jmp_buf */ void* exception;
 
 } uf_plugin_t;
 
@@ -705,7 +705,7 @@ bool uf_plugin_explain_evaluation(plugin_t* plugin, term_t t, int_mset_t* vars, 
 }
 
 static
-void uf_plugin_set_exception_handler(plugin_t* plugin, jmp_buf* handler) {
+void uf_plugin_set_exception_handler(plugin_t* plugin, /* jmp_buf */ void* handler) {
   uf_plugin_t* uf = (uf_plugin_t*) plugin;
   uf->exception = handler;
 }

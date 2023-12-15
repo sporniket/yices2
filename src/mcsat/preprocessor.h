@@ -65,7 +65,7 @@ typedef struct {
   const mcsat_options_t* options;
 
   /** Exception handler */
-  jmp_buf* exception;
+  /* jmp_buf */ void* exception;
 
   /** Scope for backtracking */
   scope_holder_t scope;
@@ -73,7 +73,7 @@ typedef struct {
 } preprocessor_t;
 
 /** Construct the preprocessor */
-void preprocessor_construct(preprocessor_t* pre, term_table_t* terms, jmp_buf* handler, const mcsat_options_t* options);
+void preprocessor_construct(preprocessor_t* pre, term_table_t* terms, /* jmp_buf */ void* handler, const mcsat_options_t* options);
 
 /** Destruct the preprocessor */
 void preprocessor_destruct(preprocessor_t* pre);
@@ -85,7 +85,7 @@ term_t preprocessor_apply(preprocessor_t* pre, term_t t, ivector_t* out, bool is
 void preprocessor_set_tracer(preprocessor_t* pre, tracer_t* tracer);
 
 /** Set the exception handler */
-void preprocessor_set_exception_handler(preprocessor_t* pre, jmp_buf* handler);
+void preprocessor_set_exception_handler(preprocessor_t* pre, /* jmp_buf */ void* handler);
 
 /** Push the preprocessor */
 void preprocessor_push(preprocessor_t* pre);

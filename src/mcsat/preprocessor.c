@@ -36,7 +36,7 @@
 #include "yices.h"
 #include "api/yices_api_lock_free.h"
 
-void preprocessor_construct(preprocessor_t* pre, term_table_t* terms, jmp_buf* handler, const mcsat_options_t* options) {
+void preprocessor_construct(preprocessor_t* pre, term_table_t* terms, /* jmp_buf */ void* handler, const mcsat_options_t* options) {
   pre->terms = terms;
   init_term_manager(&pre->tm, terms);
   init_int_hmap(&pre->preprocess_map, 0);
@@ -1076,7 +1076,7 @@ term_t preprocessor_apply(preprocessor_t* pre, term_t t, ivector_t* out, bool is
   return t_pre;
 }
 
-void preprocessor_set_exception_handler(preprocessor_t* pre, jmp_buf* handler) {
+void preprocessor_set_exception_handler(preprocessor_t* pre, /* jmp_buf */ void* handler) {
   pre->exception = handler;
 }
 

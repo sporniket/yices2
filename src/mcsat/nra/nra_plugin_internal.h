@@ -132,7 +132,7 @@ struct nra_plugin_s {
   rba_buffer_t buffer;
 
   /** Exception handler */
-  jmp_buf* exception;
+  /* jmp_buf */ void* exception;
 
 };
 
