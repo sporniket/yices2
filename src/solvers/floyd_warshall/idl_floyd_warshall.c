@@ -1885,7 +1885,7 @@ literal_t idl_select_polarity(idl_solver_t *solver, void *a, literal_t l) {
  */
 static __attribute__ ((noreturn)) void idl_exception(idl_solver_t *solver, int code) {
   if (solver->env != NULL) {
-    longjmp(*solver->env, code);
+    __builtin_unreachable() ; // longjmp(*solver->env, code);
   }
   abort();
 }

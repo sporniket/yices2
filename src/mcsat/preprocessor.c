@@ -428,7 +428,7 @@ term_t preprocessor_apply(preprocessor_t* pre, term_t t, ivector_t* out, bool is
     case SCALAR_TYPE:
       break;
     default:
-      longjmp(*pre->exception, MCSAT_EXCEPTION_UNSUPPORTED_THEORY);
+      __builtin_unreachable() ; // longjmp(*pre->exception, MCSAT_EXCEPTION_UNSUPPORTED_THEORY);
     }
 
     // Kind of term
@@ -496,7 +496,7 @@ term_t preprocessor_apply(preprocessor_t* pre, term_t t, ivector_t* out, bool is
       /*
       // Arrays not supported yet
       if (current_kind == EQ_TERM && term_type_kind(terms, desc->arg[0]) == FUNCTION_TYPE) {
-        longjmp(*pre->exception, MCSAT_EXCEPTION_UNSUPPORTED_THEORY);
+        __builtin_unreachable() ; // longjmp(*pre->exception, MCSAT_EXCEPTION_UNSUPPORTED_THEORY);
       }
       */
  
@@ -1004,7 +1004,7 @@ term_t preprocessor_apply(preprocessor_t* pre, term_t t, ivector_t* out, bool is
 
       // Arrays not supported yet
       if (term_type_kind(terms, desc->arg[0]) == FUNCTION_TYPE) {
-        longjmp(*pre->exception, MCSAT_EXCEPTION_UNSUPPORTED_THEORY);
+        __builtin_unreachable() ; // longjmp(*pre->exception, MCSAT_EXCEPTION_UNSUPPORTED_THEORY);
       }
 
       bool children_done = true;
@@ -1048,7 +1048,7 @@ term_t preprocessor_apply(preprocessor_t* pre, term_t t, ivector_t* out, bool is
 
     default:
       // UNSUPPORTED TERM/THEORY
-      longjmp(*pre->exception, MCSAT_EXCEPTION_UNSUPPORTED_THEORY);
+      __builtin_unreachable() ; // longjmp(*pre->exception, MCSAT_EXCEPTION_UNSUPPORTED_THEORY);
       break;
     }
 

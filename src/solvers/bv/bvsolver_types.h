@@ -43,7 +43,7 @@
 #define __BVSOLVER_TYPES_H
 
 #include <stdint.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "context/context_types.h"
 #include "solvers/bv/bit_blaster.h"

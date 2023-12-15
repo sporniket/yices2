@@ -24,7 +24,7 @@
 #include "options.h"
 #include "mcsat/utils/scope_holder.h"
 
-#include <setjmp.h>
+//include <setjmp.h>
 
 #ifndef MCSAT_PREPROCESSOR_H_
 #define MCSAT_PREPROCESSOR_H_

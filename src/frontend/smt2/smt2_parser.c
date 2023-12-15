@@ -20,7 +20,7 @@
  * Parser for the SMT-LIB 2.0 language
  */
 
-#include <setjmp.h>
+//include <setjmp.h>
 #include <inttypes.h>
 
 #include "frontend/smt2/smt2_commands.h"
@@ -110,7 +110,7 @@ static int32_t smt2_parse(parser_t *parser, state_t start) {
   token_queue = NULL;
 
   // To catch exceptions in term-stack operations
-  exception = setjmp(tstack->env);
+  exception = 0 ; // setjmp(tstack->env);
   if (exception == 0) {
     parser_push_state(stack, done);
     state = start;

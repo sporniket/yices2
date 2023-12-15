@@ -87,7 +87,7 @@ void __attribute__((noreturn)) raise_exception(tstack_t *stack, stack_elem_t *e,
     stack->error_string = NULL;
     break;
   }
-  longjmp(stack->env, code);
+  __builtin_unreachable() ; // longjmp(stack->env, code);
 }
 
 /*
@@ -100,7 +100,7 @@ static void __attribute__((noreturn)) bad_op_exception(tstack_t *stack, loc_t *l
   stack->error_loc = *loc;
   stack->error_op = op;
   stack->error_string = NULL;
-  longjmp(stack->env, TSTACK_INVALID_OP);
+  __builtin_unreachable() ; // longjmp(stack->env, TSTACK_INVALID_OP);
 }
 #endif
 
@@ -112,7 +112,7 @@ void __attribute__((noreturn)) push_exception(tstack_t *stack, loc_t *loc, char 
   stack->error_loc = *loc;
   stack->error_op = NO_OP;
   stack->error_string = s;
-  longjmp(stack->env, code);
+  __builtin_unreachable() ; // longjmp(stack->env, code);
 }
 
 /*
@@ -125,7 +125,7 @@ void __attribute__((noreturn)) report_yices_error(tstack_t *stack) {
   stack->error_loc = stack->elem[i].loc;
   stack->error_op = stack->top_op;
   stack->error_string = NULL;
-  longjmp(stack->env, TSTACK_YICES_ERROR);
+  __builtin_unreachable() ; // longjmp(stack->env, TSTACK_YICES_ERROR);
 }
 
 

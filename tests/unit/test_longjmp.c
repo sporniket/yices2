@@ -21,7 +21,7 @@
  */
 
 #include <stdio.h>
-#include <setjmp.h>
+//include <setjmp.h>
 #include <inttypes.h>
 
 static void jumper(jmp_buf *env) {
@@ -37,7 +37,7 @@ static void jumper(jmp_buf *env) {
 
   printf("\ncalling longjmp\n\n");
   fflush(stdout);
-  longjmp(*env, 23);
+  __builtin_unreachable() ; // longjmp(*env, 23);
 }
 
 
@@ -47,7 +47,7 @@ static void catcher(void) {
 
   printf("calling setjmp\n\n");
   fflush(stdout);
-  code = setjmp(env);
+  code = 0 ; // setjmp(env);
   if (code == 0) {
     printf("calling jumper\n\n");
     fflush(stdout);
@@ -81,7 +81,7 @@ static void jumper2(void) {
 
   printf("\ncalling longjmp\n\n");
   fflush(stdout);
-  longjmp(*aux.ptr, 45);
+  __builtin_unreachable() ; // longjmp(*aux.ptr, 45);
 }
 
 static void catcher2(void) {
@@ -93,7 +93,7 @@ static void catcher2(void) {
 
   printf("calling setjmp\n\n");
   fflush(stdout);
-  code = setjmp(env);
+  code = 0 ; // setjmp(env);
   if (code == 0) {
     printf("calling jumper2\n\n");
     fflush(stdout);

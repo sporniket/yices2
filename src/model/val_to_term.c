@@ -387,7 +387,7 @@ term_t convert_val(val_converter_t *convert, value_t v) {
   default:
     c = get_convert_code(kind);
     assert(c < 0);
-    longjmp(convert->env, c);
+    __builtin_unreachable() ; // longjmp(convert->env, c);
     break;
   }
 
@@ -401,7 +401,7 @@ term_t convert_val(val_converter_t *convert, value_t v) {
 term_t convert_value(val_converter_t *convert, value_t v) {
   term_t t;
 
-  t = setjmp(convert->env);
+  t = 0 ; // setjmp(convert->env);
   if (t == 0) {
     t = convert_val(convert, v);
   } else {

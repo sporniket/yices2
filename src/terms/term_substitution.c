@@ -515,7 +515,7 @@ term_t beta_reduce(term_manager_t *mngr, term_t t) {
  *
  * Error codes returned:
  * - if the substitution creates a term of degree > YICES_MAX_DEGREE
- *   abort by calling longjmp(subst->env): return -1 (NULL_TERM)
+ *   abort by calling __builtin_unreachable() ; // longjmp(subst->env): return -1 (NULL_TERM)
  * - if something else goes wrong (either because the substitution is wrong
  *   or there's a bug somewhere): return -2
  */
@@ -1016,7 +1016,7 @@ static term_t subst_pprod(term_subst_t *subst, pprod_t *p, type_t tau) {
    * Check for overflow
    */
   if (pprod_degree_overflows(subst->terms, p, n, a)) {
-    longjmp(subst->env, -1); // raise an exception
+    __builtin_unreachable() ; // longjmp(subst->env, -1); // raise an exception
   }
 
   /*
@@ -1319,7 +1319,7 @@ static term_t subst_composite(term_subst_t *subst, term_t t) {
 
   default:
     // error: invalid term_kind or not a composite
-    longjmp(subst->env, -2);
+    __builtin_unreachable() ; // longjmp(subst->env, -2);
     break;
   }
 
@@ -1400,7 +1400,7 @@ term_t apply_term_subst(term_subst_t *subst, term_t t) {
   term_t result;
   int code;
 
-  code = setjmp(subst->env);
+  code = 0 ; // setjmp(subst->env);
   if (code == 0) {
     result = get_subst(subst, t);
   } else {

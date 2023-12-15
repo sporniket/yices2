@@ -44,7 +44,7 @@ typedef void (*out_of_mem_callback_t)(void);
 extern out_of_mem_callback_t __out_of_mem_callback;
 
 /*
- * Either calls longjmp(out_of_mem, -1) or prints an error message then
+ * Either calls __builtin_unreachable() ; // longjmp(out_of_mem, -1) or prints an error message then
  * calls exit(YICES_EXIT_OUT_OF_MEMORY)
  * - this exit code is defined in yices_exit_codes.h
  */

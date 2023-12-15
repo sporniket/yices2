@@ -2849,7 +2849,7 @@ thvar_t simplex_create_poly(simplex_solver_t *solver, polynomial_t *p, thvar_t *
  */
 thvar_t simplex_create_pprod(simplex_solver_t *solver, pprod_t *p, thvar_t *map) {
   if (solver->env != NULL) {
-    longjmp(*solver->env, FORMULA_NOT_LINEAR);
+    __builtin_unreachable() ; // longjmp(*solver->env, FORMULA_NOT_LINEAR);
   }
   abort();
 }

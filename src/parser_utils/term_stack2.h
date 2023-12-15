@@ -62,7 +62,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "frontend/smt2/attribute_values.h"
 #include "terms/bvlogic_buffers.h"
@@ -326,7 +326,7 @@ struct tstack_s {
  * -----------------------------------------
  * To set the handler call setjmp(stack->env)
  * The exception handler is called on any error
- * via longjmp(stack->env, error_code).
+ * via __builtin_unreachable() ; // longjmp(stack->env, error_code).
  *
  * When an exception is raised, the stack may be in an inconsistent
  * state. Do not do any operations on the stack without calling

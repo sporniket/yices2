@@ -26,7 +26,7 @@
 #include "mcsat/mcsat_types.h"
 #include "mcsat/options.h"
 
-#include <setjmp.h>
+//include <setjmp.h>
 
 /*
  * Allocate and construct the solver.

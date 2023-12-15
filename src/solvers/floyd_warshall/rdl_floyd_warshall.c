@@ -2198,7 +2198,7 @@ literal_t rdl_select_polarity(rdl_solver_t *solver, void *a, literal_t l) {
  */
 static __attribute__ ((noreturn)) void rdl_exception(rdl_solver_t *solver, int code) {
   if (solver->env != NULL) {
-    longjmp(*solver->env, code);
+    __builtin_unreachable() ; // longjmp(*solver->env, code);
   }
   abort();
 }

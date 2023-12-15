@@ -132,7 +132,7 @@ static value_t eval_term(evaluator_t *eval, term_t t);
  */
 static rational_t *eval_get_rational(evaluator_t *eval, value_t v) {
   if (object_is_algebraic(eval->vtbl, v)) {
-    longjmp(eval->env, MDL_EVAL_FAILED);
+    __builtin_unreachable() ; // longjmp(eval->env, MDL_EVAL_FAILED);
   }
   return vtbl_rational(eval->vtbl, v);
 }
@@ -162,7 +162,7 @@ static rational_t *eval_get_nz_rational(evaluator_t *eval, value_t v) {
 
   q = eval_get_rational(eval, v);
   if (q_is_zero(q)) {
-    longjmp(eval->env, MDL_EVAL_FAILED);
+    __builtin_unreachable() ; // longjmp(eval->env, MDL_EVAL_FAILED);
   }
   return q;
 }
@@ -173,7 +173,7 @@ static lp_algebraic_number_t *eval_get_nz_algebraic(evaluator_t *eval, value_t v
 
   a = vtbl_algebraic_number(eval->vtbl, v);
   if (lp_algebraic_number_sgn(a) == 0) {
-    longjmp(eval->env, MDL_EVAL_FAILED);
+    __builtin_unreachable() ; // longjmp(eval->env, MDL_EVAL_FAILED);
   }
   return a;
 }
@@ -1584,7 +1584,7 @@ static value_t eval_term(evaluator_t *eval, term_t t) {
 
       case VARIABLE:
         // free variable
-        longjmp(eval->env, MDL_EVAL_FREEVAR_IN_TERM);
+        __builtin_unreachable() ; // longjmp(eval->env, MDL_EVAL_FREEVAR_IN_TERM);
         break;
 
       case UNINTERPRETED_TERM:
@@ -1592,7 +1592,7 @@ static value_t eval_term(evaluator_t *eval, term_t t) {
         if (eval->model->has_alias) {
           v = eval_uninterpreted(eval, t);
         } else {
-          longjmp(eval->env, MDL_EVAL_UNKNOWN_TERM);
+          __builtin_unreachable() ; // longjmp(eval->env, MDL_EVAL_UNKNOWN_TERM);
         }
         break;
 
@@ -1653,12 +1653,12 @@ static value_t eval_term(evaluator_t *eval, term_t t) {
       case FORALL_TERM:
         // don't try to evaluate forall for now
         // but we could deal with quantification over finite types
-        longjmp(eval->env, MDL_EVAL_QUANTIFIER);
+        __builtin_unreachable() ; // longjmp(eval->env, MDL_EVAL_QUANTIFIER);
         break;
 
       case LAMBDA_TERM:
         // don't evaluate
-        longjmp(eval->env, MDL_EVAL_LAMBDA);
+        __builtin_unreachable() ; // longjmp(eval->env, MDL_EVAL_LAMBDA);
         break;
 
       case OR_TERM:
@@ -1768,14 +1768,14 @@ static value_t eval_term(evaluator_t *eval, term_t t) {
 
       default:
         assert(false);
-        longjmp(eval->env, MDL_EVAL_INTERNAL_ERROR);
+        __builtin_unreachable() ; // longjmp(eval->env, MDL_EVAL_INTERNAL_ERROR);
         break;
       }
 
       // if the result v is unknown we quit now
       assert(v >= 0); // Coverity thinks v can be negative.
       if (object_is_unknown(eval->vtbl, v)) {
-        longjmp(eval->env, MDL_EVAL_FAILED);
+        __builtin_unreachable() ; // longjmp(eval->env, MDL_EVAL_FAILED);
       }
 
       eval_cache_map(eval, t, v);
@@ -1802,7 +1802,7 @@ static value_t eval_term(evaluator_t *eval, term_t t) {
 value_t eval_in_model(evaluator_t *eval, term_t t) {
   value_t v;
 
-  v = setjmp(eval->env);
+  v = 0 ; // setjmp(eval->env);
   if (v == 0) {
     v = eval_term(eval, t);
   } else {

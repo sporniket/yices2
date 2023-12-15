@@ -138,7 +138,7 @@ static value_t term_to_val(term_converter_t *convert, term_t t) {
   switch (term_kind(terms, t)) {
   case UNUSED_TERM:
   case RESERVED_TERM:
-    longjmp(convert->env, TERM2VAL_INTERNAL_ERROR);
+    __builtin_unreachable() ; // longjmp(convert->env, TERM2VAL_INTERNAL_ERROR);
     break;
 
   case CONSTANT_TERM:
@@ -172,7 +172,7 @@ static value_t term_to_val(term_converter_t *convert, term_t t) {
     break;
 
   default:
-    longjmp(convert->env, TERM2VAL_NOT_CONSTANT);
+    __builtin_unreachable() ; // longjmp(convert->env, TERM2VAL_NOT_CONSTANT);
     break;
   }
 
@@ -187,7 +187,7 @@ static value_t term_to_val(term_converter_t *convert, term_t t) {
 value_t convert_term_to_val(term_converter_t *convert, term_t t) {
   value_t v;
 
-  v = setjmp(convert->env);
+  v = 0 ; // setjmp(convert->env);
   if (v == 0) {
     v = term_to_val(convert, t);
   } else {

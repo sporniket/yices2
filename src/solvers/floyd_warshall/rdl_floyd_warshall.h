@@ -74,7 +74,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "context/context_types.h"
 #include "solvers/cdcl/smt_core.h"

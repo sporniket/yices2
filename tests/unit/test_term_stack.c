@@ -22,7 +22,7 @@
 
 #include <stdint.h>
 #include <inttypes.h>
-#include <setjmp.h>
+//include <setjmp.h>
 #include <stdio.h>
 
 #include "api/yices_globals.h"
@@ -74,7 +74,7 @@ int main(void) {
   loc.line = 0;
   loc.column = 0;
 
-  exception = setjmp(stack.env);
+  exception = 0 ; // setjmp(stack.env);
   if (exception == 0) {
     // fake location
     loc.line ++;

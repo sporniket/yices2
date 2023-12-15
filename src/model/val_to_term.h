@@ -24,7 +24,7 @@
 #define __VAL_TO_TERM_H
 
 #include <stdint.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "model/concrete_values.h"
 #include "terms/term_manager.h"

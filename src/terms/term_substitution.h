@@ -37,7 +37,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "terms/renaming_context.h"
 #include "terms/subst_cache.h"

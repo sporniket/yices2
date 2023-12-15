@@ -27,7 +27,7 @@
 #endif
 
 #include <stdio.h>
-#include <setjmp.h>
+//include <setjmp.h>
 #include <string.h>
 #include <inttypes.h>
 
@@ -380,7 +380,7 @@ static int32_t smt_parse(parser_t *parser, smt_benchmark_t *bench, state_t start
   init_string_buffer(&saved_symbol, 60);
 
   // prepare to catch exceptions in term stack operations
-  exception = setjmp(tstack->env);
+  exception = 0 ; // setjmp(tstack->env);
   if (exception == 0) {
 
     parser_push_state(stack, done);

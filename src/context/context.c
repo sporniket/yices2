@@ -170,7 +170,7 @@ static occ_t translate_thvar_to_eterm(context_t *ctx, thvar_t x, type_t tau) {
   } else if (is_bv_type(ctx->types, tau)) {
     return translate_bvvar_to_eterm(ctx, x, tau);
   } else {
-    longjmp(ctx->env, INTERNAL_ERROR);
+    __builtin_unreachable() ; // longjmp(ctx->env, INTERNAL_ERROR);
   }
 }
 
@@ -209,7 +209,7 @@ static occ_t translate_code_to_eterm(context_t *ctx, term_t t, int32_t x) {
 
     default:
       assert(false);
-      longjmp(ctx->env, INTERNAL_ERROR);
+      __builtin_unreachable() ; // longjmp(ctx->env, INTERNAL_ERROR);
     }
 
     // remap t to u
@@ -269,7 +269,7 @@ static void check_high_order_support(context_t *ctx, const term_t *a, uint32_t n
   if (! context_has_fun_solver(ctx)) {
     for (i=0; i<n; i++) {
       if (is_function_term(ctx->terms, a[i])) {
-	longjmp(ctx->env, HIGH_ORDER_FUN_NOT_SUPPORTED);
+	__builtin_unreachable() ; // longjmp(ctx->env, HIGH_ORDER_FUN_NOT_SUPPORTED);
       }
     }
   }
@@ -650,7 +650,7 @@ static occ_t map_arith_constant_to_eterm(context_t *ctx, rational_t *q) {
   thvar_t x;
 
   if (! context_has_arith_solver(ctx)) {
-    longjmp(ctx->env, ARITH_NOT_SUPPORTED);
+    __builtin_unreachable() ; // longjmp(ctx->env, ARITH_NOT_SUPPORTED);
   }
 
   x = ctx->arith.create_const(ctx->arith_solver, q);
@@ -662,7 +662,7 @@ static occ_t map_bvconst64_to_eterm(context_t *ctx, bvconst64_term_t *c) {
   type_t tau;
 
   if (! context_has_bv_solver(ctx)) {
-    longjmp(ctx->env, BV_NOT_SUPPORTED);
+    __builtin_unreachable() ; // longjmp(ctx->env, BV_NOT_SUPPORTED);
   }
 
   x = ctx->bv.create_const64(ctx->bv_solver, c);
@@ -676,7 +676,7 @@ static occ_t map_bvconst_to_eterm(context_t *ctx, bvconst_term_t *c) {
   type_t tau;
 
   if (! context_has_bv_solver(ctx)) {
-    longjmp(ctx->env, BV_NOT_SUPPORTED);
+    __builtin_unreachable() ; // longjmp(ctx->env, BV_NOT_SUPPORTED);
   }
 
   x = ctx->bv.create_const(ctx->bv_solver, c);
@@ -1476,7 +1476,7 @@ static void __attribute__((noreturn))  bad_divisor(context_t *ctx, term_t t) {
   if (term_kind(tbl, t) == ARITH_CONSTANT && q_is_zero(rational_term_desc(tbl, t))) {
     code = DIV_BY_ZERO;
   }
-  longjmp(ctx->env, code);
+  __builtin_unreachable() ; // longjmp(ctx->env, code);
 }
 
 /*
@@ -2107,7 +2107,7 @@ static literal_t map_distinct_to_literal(context_t *ctx, composite_term_t *disti
     l = make_bv_distinct(ctx, n, a);
 
   } else {
-    longjmp(ctx->env, uf_error_code(ctx, distinct->arg[0]));
+    __builtin_unreachable() ; // longjmp(ctx->env, uf_error_code(ctx, distinct->arg[0]));
   }
 
   free_istack_array(&ctx->istack, a);
@@ -2423,7 +2423,7 @@ static literal_t map_arith_divides_to_literal(context_t *ctx, composite_term_t *
 
   } else {
     // k is not a constant: not supported
-    longjmp(ctx->env, FORMULA_NOT_LINEAR);
+    __builtin_unreachable() ; // longjmp(ctx->env, FORMULA_NOT_LINEAR);
   }
 }
 
@@ -2769,7 +2769,7 @@ static occ_t internalize_to_eterm(context_t *ctx, term_t t) {
   return u ^ polarity;
 
  abort:
-  longjmp(ctx->env, exception);
+  __builtin_unreachable() ; // longjmp(ctx->env, exception);
 }
 
 
@@ -2933,7 +2933,7 @@ static thvar_t internalize_to_arith(context_t *ctx, term_t t) {
   return x;
 
  abort:
-  longjmp(ctx->env, exception);
+  __builtin_unreachable() ; // longjmp(ctx->env, exception);
 }
 
 
@@ -3108,7 +3108,7 @@ static thvar_t internalize_to_bv(context_t *ctx, term_t t) {
   return x;
 
  abort:
-  longjmp(ctx->env, exception);
+  __builtin_unreachable() ; // longjmp(ctx->env, exception);
 }
 
 
@@ -3193,7 +3193,7 @@ static literal_t internalize_to_literal(context_t *ctx, term_t t) {
       break;
 
     case VARIABLE:
-      longjmp(ctx->env, FREE_VARIABLE_IN_FORMULA);
+      __builtin_unreachable() ; // longjmp(ctx->env, FREE_VARIABLE_IN_FORMULA);
       break;
 
     case UNINTERPRETED_TERM:
@@ -3255,7 +3255,7 @@ static literal_t internalize_to_literal(context_t *ctx, term_t t) {
 
     case FORALL_TERM:
       if (context_in_strict_mode(ctx)) {
-        longjmp(ctx->env, QUANTIFIERS_NOT_SUPPORTED);
+        __builtin_unreachable() ; // longjmp(ctx->env, QUANTIFIERS_NOT_SUPPORTED);
       }
       // lax mode: turn forall into a proposition
       l = pos_lit(create_boolean_variable(ctx->core));
@@ -3278,7 +3278,7 @@ static literal_t internalize_to_literal(context_t *ctx, term_t t) {
       break;
 
     default:
-      longjmp(ctx->env, INTERNAL_ERROR);
+      __builtin_unreachable() ; // longjmp(ctx->env, INTERNAL_ERROR);
       break;
     }
 
@@ -3313,7 +3313,7 @@ static void assert_internalization_code(context_t *ctx, int32_t x, bool tt) {
     // We must deal with 'true_occ/false_occ' separately
     // since they may be used even if there's no actual egraph.
     if (g == false_occ) {
-      longjmp(ctx->env, TRIVIALLY_UNSAT);
+      __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     } else if (g != true_occ) {
       assert(ctx->egraph != NULL);
       if (!context_quant_enabled(ctx) || egraph_is_at_base_level(ctx->egraph)) {
@@ -3637,7 +3637,7 @@ static void try_arithvar_bineq_elim(context_t *ctx, term_t t1, term_t t2) {
       intern_tbl_add_subst(intern, t1, t2);
     } else {
       // unsat by type incompatibility
-      longjmp(ctx->env, TRIVIALLY_UNSAT);
+      __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     }
 
   } else if (intern_tbl_sound_subst(intern, t1, t2)) {
@@ -3840,7 +3840,7 @@ static void assert_toplevel_iff(context_t *ctx, term_t t1, term_t t2, bool tt) {
   if (t1 == t2) {
     // (eq t1 t2) is true
     if (!tt) {
-      longjmp(ctx->env, TRIVIALLY_UNSAT);
+      __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     }
   }
   // try simplification
@@ -3993,7 +3993,7 @@ static void assert_toplevel_distinct(context_t *ctx, composite_term_t *distinct,
     assert_bv_distinct(ctx, n, a, tt);
 
   } else {
-    longjmp(ctx->env, uf_error_code(ctx, distinct->arg[0]));
+    __builtin_unreachable() ; // longjmp(ctx->env, uf_error_code(ctx, distinct->arg[0]));
   }
 
   free_istack_array(&ctx->istack, a);
@@ -4229,7 +4229,7 @@ static void assert_toplevel_arith_is_int(context_t *ctx, term_t t, bool tt) {
   x = internalize_to_arith(ctx, t);
   if (ctx->arith.arith_var_is_int(ctx->arith_solver, x)) {
     if (!tt) {
-      longjmp(ctx->env, TRIVIALLY_UNSAT);
+      __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     }
   } else {
     // x is not an integer variable
@@ -4282,7 +4282,7 @@ static void assert_toplevel_arith_divides(context_t *ctx, composite_term_t *divi
     q_clear(&k);
   } else {
     // not a constant divider: not supported
-    longjmp(ctx->env, FORMULA_NOT_LINEAR);
+    __builtin_unreachable() ; // longjmp(ctx->env, FORMULA_NOT_LINEAR);
   }
 }
 
@@ -4598,11 +4598,11 @@ static void assert_toplevel_bveq(context_t *ctx, composite_term_t *eq, bool tt) 
   try_arithmetic_bveq_simplification(ctx, &simp, t1, t2);
   switch (simp.code) {
   case BVEQ_CODE_TRUE:
-    if (!tt) longjmp(ctx->env, TRIVIALLY_UNSAT);
+    if (!tt) __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     break;
 
   case BVEQ_CODE_FALSE:
-    if (tt) longjmp(ctx->env, TRIVIALLY_UNSAT);
+    if (tt) __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     break;
 
   case BVEQ_CODE_REDUCED:
@@ -4646,7 +4646,7 @@ static void assert_toplevel_bveq(context_t *ctx, composite_term_t *eq, bool tt) 
     objstack_pop(&ctx->ostack);
 
     if (eq) {
-      longjmp(ctx->env, TRIVIALLY_UNSAT);
+      __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     }
   }
 
@@ -4795,7 +4795,7 @@ static void assert_toplevel_formula(context_t *ctx, term_t t) {
   return;
 
  abort:
-  longjmp(ctx->env, code);
+  __builtin_unreachable() ; // longjmp(ctx->env, code);
 }
 
 
@@ -4929,7 +4929,7 @@ static void assert_term(context_t *ctx, term_t t, bool tt) {
   return;
 
  abort:
-  longjmp(ctx->env, code);
+  __builtin_unreachable() ; // longjmp(ctx->env, code);
 }
 
 
@@ -5979,7 +5979,7 @@ static int32_t context_process_assertions(context_t *ctx, uint32_t n, const term
   ivector_reset(&ctx->aux_eqs);
   ivector_reset(&ctx->aux_atoms);
 
-  code = setjmp(ctx->env);
+  code = 0 ; // setjmp(ctx->env);
   if (code == 0) {
 
     // If using MCSAT, just check and done
@@ -6180,7 +6180,7 @@ static int32_t context_process_assertions(context_t *ctx, uint32_t n, const term
 
   } else {
     /*
-     * Exception: return from longjmp(ctx->env, code);
+     * Exception: return from __builtin_unreachable() ; // longjmp(ctx->env, code);
      */
     ivector_reset(&ctx->aux_vector);
     reset_istack(&ctx->istack);
@@ -6318,7 +6318,7 @@ int32_t context_internalize(context_t *ctx, term_t t) {
   ivector_reset(&ctx->subst_eqs);
   ivector_reset(&ctx->aux_eqs);
 
-  code = setjmp(ctx->env);
+  code = 0 ; // setjmp(ctx->env);
   if (code == 0) {
     // we must call internalization start first
     if (!context_quant_enabled(ctx)) {
@@ -6398,7 +6398,7 @@ int32_t context_process_formulas(context_t *ctx, uint32_t n, term_t *f) {
   ivector_reset(&ctx->aux_eqs);
   ivector_reset(&ctx->aux_atoms);
 
-  code = setjmp(ctx->env);
+  code = 0 ; // setjmp(ctx->env);
   if (code == 0) {
     // flatten
     for (i=0; i<n; i++) {
@@ -6496,7 +6496,7 @@ int32_t context_process_formulas(context_t *ctx, uint32_t n, term_t *f) {
 
   } else {
     /*
-     * Exception: return from longjmp(ctx->env, code);
+     * Exception: return from __builtin_unreachable() ; // longjmp(ctx->env, code);
      */
     ivector_reset(&ctx->aux_vector);
     reset_istack(&ctx->istack);

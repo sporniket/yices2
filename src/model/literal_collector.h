@@ -103,7 +103,7 @@
 #define __LITERAL_COLLECTOR_H
 
 #include <stdint.h>
-#include <setjmp.h>
+//include <setjmp.h>
 #include <assert.h>
 
 #include "model/model_eval.h"

@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "yices.h"
 
@@ -110,7 +110,7 @@ static void oom_handler(void) {
     fprintf(stderr, "Out of memory (uncaught)\n");
     exit(1);
   }
-  longjmp(*env, -1);
+  __builtin_unreachable() ; // longjmp(*env, -1);
 }
 
 int main(void) {
@@ -121,7 +121,7 @@ int main(void) {
   env = NULL;
   yices_set_out_of_mem_callback(oom_handler);
 
-  if (setjmp(buffer) == 0) {
+  if (0 /* setjmp(buffer) */ == 0) {
     env = &buffer;
 
     yices_init();  

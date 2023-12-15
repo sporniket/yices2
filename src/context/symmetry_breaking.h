@@ -24,7 +24,7 @@
 #define __SYMMETRY_BREAKING_H
 
 #include <stdint.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "context/context_types.h"
 #include "terms/term_manager.h"

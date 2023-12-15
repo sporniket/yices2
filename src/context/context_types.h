@@ -25,7 +25,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "api/smt_logic_codes.h"
 #include "context/assumption_stack.h"
@@ -386,7 +386,7 @@ enum {
  * -------------------
  * When the solver is created and initialized it's given a pointer b to a jmp_buf internal to
  * the context. If the solver fails in some way during internalization, it can call
- * longjmp(*b, error_code) to interrupt the internalization and return control to the
+ * __builtin_unreachable() ; // longjmp(*b, error_code) to interrupt the internalization and return control to the
  * context. For arithmetic solvers, the following error codes should be used:
  *
  *   FORMULA_NOT_IDL         (the solver supports only integer difference logic)

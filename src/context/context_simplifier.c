@@ -1134,7 +1134,7 @@ static void process_candidate_subst(context_t *ctx, term_t t1, term_t t2, term_t
       intern_tbl_add_subst(intern, t1, t2);
     } else {
       // unsat by type incompatibility
-      longjmp(ctx->env, TRIVIALLY_UNSAT);
+      __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     }
   } else if (intern_tbl_sound_subst(intern, t1, t2)) {
     ivector_push(&ctx->subst_eqs, e);
@@ -1632,7 +1632,7 @@ static bool visit(context_t *ctx, term_t t) {
     case RESERVED_TERM:
     default:
       assert(false);
-      longjmp(ctx->env, INTERNAL_ERROR);
+      __builtin_unreachable() ; // longjmp(ctx->env, INTERNAL_ERROR);
       break;
     }
 
@@ -1868,7 +1868,7 @@ static void flatten_arith_eq(context_t *ctx, term_t r, bool tt) {
 
   if (t1 == t2) {
     if (!tt) {
-      longjmp(ctx->env, TRIVIALLY_UNSAT);
+      __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     }
     return; // redundant
   }
@@ -1914,7 +1914,7 @@ static void flatten_eq(context_t *ctx, term_t r, bool tt) {
         // either (eq t1 t1) or (eq t1 (not t1))
         if (t1 == t2) return;
         assert(opposite_bool_terms(t1, t2));
-        longjmp(ctx->env, TRIVIALLY_UNSAT);
+        __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
       }
 
       try_bool_substitution(ctx, t1, t2, r);
@@ -1926,7 +1926,7 @@ static void flatten_eq(context_t *ctx, term_t r, bool tt) {
      */
     if (t1 == t2) {
       if (! tt) {
-        longjmp(ctx->env, TRIVIALLY_UNSAT);
+        __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
       }
       return;
     }
@@ -1959,7 +1959,7 @@ static void flatten_bveq(context_t *ctx, term_t r, bool tt) {
   if (t != NULL_TERM) {
     t = signed_term(t, tt);
     if (t == false_term) {
-      longjmp(ctx->env, TRIVIALLY_UNSAT);
+      __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     } else if (t != true_term) {
       int_queue_push(&ctx->queue, t);
     }
@@ -2332,7 +2332,7 @@ void flatten_assertion(context_t *ctx, term_t f) {
 
  abort:
   assert(exception != 0);
-  longjmp(ctx->env, exception);
+  __builtin_unreachable() ; // longjmp(ctx->env, exception);
 }
 
 
@@ -2386,7 +2386,7 @@ static void process_aux_eq(context_t *ctx, term_t eq) {
     code = intern_tbl_map_of_root(&ctx->intern, eq);
     if (code == bool2code(false)) {
       // contradiction
-      longjmp(ctx->env, TRIVIALLY_UNSAT);
+      __builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
     } else if (code != bool2code(true)) {
       ivector_push(&ctx->top_interns, eq);
     }
@@ -2470,7 +2470,7 @@ void process_aux_atoms(context_t *ctx) {
       code = intern_tbl_map_of_root(&ctx->intern, r);
       if (code == bool2code(false)) {
 	// contradiction
-	longjmp(ctx->env, TRIVIALLY_UNSAT);
+	__builtin_unreachable() ; // longjmp(ctx->env, TRIVIALLY_UNSAT);
       } else if (code != bool2code(true)) {
 	ivector_push(&ctx->top_interns, r);
       }
@@ -3257,7 +3257,7 @@ static void analyze_dl(context_t *ctx, term_t t, bool idl) {
 
  abort:
   code = idl ? FORMULA_NOT_IDL : FORMULA_NOT_RDL;
-  longjmp(ctx->env, code);
+  __builtin_unreachable() ; // longjmp(ctx->env, code);
 }
 
 

@@ -1041,7 +1041,7 @@ static term_t full_subst_pprod(full_subst_t *subst, pprod_t *p) {
   }
 
   if (pprod_degree_overflows(subst->terms, p, n, a)) {
-    longjmp(subst->env, FULL_SUBST_DEGREE_OVERFLOW);
+    __builtin_unreachable() ; // longjmp(subst->env, FULL_SUBST_DEGREE_OVERFLOW);
   }
 
   s = mk_pprod(subst->mngr, p, n, a);
@@ -1330,7 +1330,7 @@ static term_t full_subst_composite(full_subst_t *subst, term_t t) {
 
   default:
     assert(false);
-    longjmp(subst->env, FULL_SUBST_INTERNAL_ERROR);
+    __builtin_unreachable() ; // longjmp(subst->env, FULL_SUBST_INTERNAL_ERROR);
     break;
   }
 
@@ -1374,7 +1374,7 @@ static term_t full_subst(full_subst_t *subst, term_t t) {
   case UNUSED_TERM:
   case RESERVED_TERM:
     assert(false);
-    longjmp(subst->env, FULL_SUBST_INTERNAL_ERROR);
+    __builtin_unreachable() ; // longjmp(subst->env, FULL_SUBST_INTERNAL_ERROR);
     break;
 
   default:
@@ -1402,7 +1402,7 @@ term_t full_subst_apply(full_subst_t *subst, term_t t) {
   term_t result;
   int code;
 
-  code = setjmp(subst->env);
+  code = 0 ; // setjmp(subst->env);
   if (code == 0) {
     result = full_subst(subst, t);
   } else {

@@ -25,7 +25,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "model/models.h"
 #include "utils/int_hash_map.h"

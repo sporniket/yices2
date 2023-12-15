@@ -69,7 +69,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <setjmp.h>
+//include <setjmp.h>
 
 #include "terms/term_manager.h"
 #include "terms/terms.h"

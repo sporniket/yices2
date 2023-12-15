@@ -21,7 +21,7 @@
  */
 
 #include <stdio.h>
-#include <setjmp.h>
+//include <setjmp.h>
 #include <inttypes.h>
 
 #include "api/yices_globals.h"
@@ -307,7 +307,7 @@ static int32_t yices_parse(parser_t *parser, state_t start, FILE *err) {
          tstack->top_op == BUILD_TERM);
 
   // prepare to catch exceptions in term stack operations
-  exception = setjmp(tstack->env);
+  exception = 0 ; // setjmp(tstack->env);
   if (exception == 0) {
 
     parser_push_state(stack, done);

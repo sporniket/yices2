@@ -29,7 +29,7 @@
 
 #include "io/tracer.h"
 
-#include <setjmp.h>
+//include <setjmp.h>
 
 /**
  * Notification of basic solver events.

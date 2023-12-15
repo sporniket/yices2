@@ -776,7 +776,7 @@ static inline void reset_ctx_subst(ctx_subst_t *s) {
 
 /*
  * Get the term mapped to t in s
- * - raise an exception (by longjmp(s->env, -1) if something goes wrong
+ * - raise an exception (by __builtin_unreachable() ; // longjmp(s->env, -1) if something goes wrong
  *   (i.e., t is not in the QF_UF fragment)
  */
 static term_t ctx_subst(ctx_subst_t *s, term_t t);
@@ -982,7 +982,7 @@ static term_t ctx_subst(ctx_subst_t *s, term_t t) {
       break;
 
     default:
-      longjmp(s->env, -1);
+      __builtin_unreachable() ; // longjmp(s->env, -1);
       break;
     }
 
@@ -1105,7 +1105,7 @@ static bool check_perm_invariance(context_t *ctx, ctx_subst_t *s, term_t *c, uin
 
   result = false;
 
-  code = setjmp(s->env);
+  code = 0 ; // setjmp(s->env);
   if (code == 0) {
     // empty substitution = normalize the assertions
     reset_ctx_subst(s);

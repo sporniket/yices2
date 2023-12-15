@@ -163,7 +163,7 @@ static value_t lit_collector_eval(lit_collector_t *collect, term_t t) {
   v = eval_in_model(&collect->eval, t);
   if (v < 0) {
     fprintf(stderr, "ERROR!!!\n");
-    longjmp(collect->env, v);
+    __builtin_unreachable() ; // longjmp(collect->env, v);
   }
   return v;
 }
@@ -271,7 +271,7 @@ static int arith_cmp_in_model(lit_collector_t *collect, term_t t1, term_t t2) {
     return result;
 #else
     assert(false);
-    longjmp(collect->env, MDL_EVAL_INTERNAL_ERROR);
+    __builtin_unreachable() ; // longjmp(collect->env, MDL_EVAL_INTERNAL_ERROR);
 #endif
   }
 }
@@ -297,7 +297,7 @@ static int lit_collector_sign_in_model(lit_collector_t *collect, term_t t) {
     return lp_algebraic_number_sgn(vtbl_algebraic_number(&collect->model->vtbl, v));
 #else
     assert(false);
-    longjmp(collect->env, MDL_EVAL_INTERNAL_ERROR);
+    __builtin_unreachable() ; // longjmp(collect->env, MDL_EVAL_INTERNAL_ERROR);
 #endif
   }
 }
@@ -1362,7 +1362,7 @@ static term_t lit_collector_visit(lit_collector_t *collect, term_t t) {
       break;
 
     case VARIABLE:
-      longjmp(collect->env, MDL_EVAL_FREEVAR_IN_TERM);
+      __builtin_unreachable() ; // longjmp(collect->env, MDL_EVAL_FREEVAR_IN_TERM);
       break;
 
     case UNINTERPRETED_TERM:
@@ -1423,11 +1423,11 @@ static term_t lit_collector_visit(lit_collector_t *collect, term_t t) {
       break;
 
     case FORALL_TERM:
-      longjmp(collect->env, MDL_EVAL_QUANTIFIER);
+      __builtin_unreachable() ; // longjmp(collect->env, MDL_EVAL_QUANTIFIER);
       break;
 
     case LAMBDA_TERM:
-      longjmp(collect->env, MDL_EVAL_LAMBDA);
+      __builtin_unreachable() ; // longjmp(collect->env, MDL_EVAL_LAMBDA);
       break;
 
       //ARITH_ROOT_ATOM should get its very longjmp 
@@ -1537,7 +1537,7 @@ static term_t lit_collector_visit(lit_collector_t *collect, term_t t) {
     default:
       //iam: fprintf(stderr, "lit_collector_visit %d\n", term_kind(terms, t));
       assert(false);
-      longjmp(collect->env, MDL_EVAL_INTERNAL_ERROR);
+      __builtin_unreachable() ; // longjmp(collect->env, MDL_EVAL_INTERNAL_ERROR);
       break;
     }
     lit_collector_cache_result(collect, t, u);
@@ -1557,7 +1557,7 @@ static term_t lit_collector_visit(lit_collector_t *collect, term_t t) {
 term_t lit_collector_process(lit_collector_t *collect, term_t t) {
   term_t u;
 
-  u = setjmp(collect->env);
+  u = 0 ; // setjmp(collect->env);
   if (u == 0) {
     u = lit_collector_visit(collect, t);
   } else {
