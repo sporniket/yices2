@@ -290,7 +290,7 @@ void start_timeout(timeout_t *timeout, uint32_t delay, timeout_handler_t handler
   }
 #endif
 
-  (void) alarm(delay);
+  /*(void) alarm(delay);*/
 }
 
 
@@ -307,7 +307,7 @@ void clear_timeout(timeout_t *timeout) {
   if (the_timeout.state == TIMEOUT_ACTIVE) {
     // not fired;
     the_timeout.state = TIMEOUT_CANCELED;
-    (void) alarm(0); // cancel the alarm
+    /*(void) alarm(0); // cancel the alarm*/
   }
   the_timeout.state = TIMEOUT_READY;
 }
@@ -322,7 +322,7 @@ void delete_timeout(timeout_t *timeout) {
   assert(timeout == &the_timeout);
   
   if (the_timeout.state == TIMEOUT_ACTIVE) {
-    (void) alarm(0);
+    /*(void) alarm(0);*/
   }
   (void) signal(SIGALRM, saved_handler);
   the_timeout.state = TIMEOUT_NOT_READY;
